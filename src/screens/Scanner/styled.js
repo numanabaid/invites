@@ -25,9 +25,11 @@ export const TextWrapper = styled.View`
 export const WelcomeText = styled.Text`
     font-size: ${scale(16)};
     font-weight: 600;
+    color: black;
 `;
 
 export const BodyText = styled.Text`
     font-size: ${scale(14)};
     font-weight: 400;
+    color: black;
 `;
