@@ -1,13 +1,27 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Text } from "react-native";
+import {Button, Text, Image, View } from "react-native";
 import { Container } from "../..";
 import { spacing } from "../../theme/spacing";
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from "react-native-vision-camera";
 import { useNavigation } from "@react-navigation/native";
-import { BodyText, BottomSheetContent, ButtonsWrapper, CameraWrapper, TextWrapper, WelcomeText } from "./styled";
+import { 
+    BodyText, 
+    BottomSheetContent, 
+    ButtonsWrapper, 
+    CameraWrapper, 
+    TextWrapper, 
+    WelcomeText, 
+    LogoHolder, 
+    Btn, 
+    BtnText,
+    CaptionText,
+} from "./styled";
 import { setData } from "../../utils/storage";
 import debounce from 'lodash/debounce';
 import { BottomSheet } from "../../components/BottomSheet";
+
+import BG from '../../../assets/bg-image.png'
+import Logo from '../../../assets/logo.png'
 
 export const Scanner = () => {
 
@@ -73,12 +87,18 @@ export const Scanner = () => {
 	}
 
     return (
-        <Container paddingHorizontal={spacing.default}>
+        <Container paddingHorizontal={spacing.default} paddingTop={20} paddingBottom={20} backgroundImage={BG}>
+            <View>
+
+            <CaptionText>For healthcare professionals only</CaptionText>
+            </View>
+            <LogoHolder source={Logo}></LogoHolder>
             <CameraWrapper>
                 <Camera
                     style={{
                         height: 300,
                         width: 300,
+                        
                     }}
                     device={device}
                     isActive={isActive}
@@ -86,9 +106,15 @@ export const Scanner = () => {
                 />
             </CameraWrapper>
             <ButtonsWrapper>
-                <Button onPress={onReset} title="Reset" />
-                <Button onPress={onSeeDetails} title="See Details" />
+                {/* <Button onPress={onReset} title="Reset" /> */}
+                <Btn onPress={onSeeDetails} >
+                    <BtnText>View List</BtnText>
+                    </Btn>
             </ButtonsWrapper>
+            <View>
+
+            <CaptionText>breastmilk is best</CaptionText>
+            </View>
             <BottomSheet displayHandle isVisible={isVisible} onClose={onPressOkay}>
                 <BottomSheetContent>
                     <TextWrapper>
