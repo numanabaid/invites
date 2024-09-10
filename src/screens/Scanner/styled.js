@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { spacing } from '../../theme/spacing';
 import { scale } from '../../utils/media';
+import { color } from '../../theme/color';
 
 export const CameraWrapper = styled.View`
     flex: 1;
@@ -43,10 +44,12 @@ export const LogoHolder = styled.Image`
     margin-horizontal: auto;
 `;
 
-export const Btn = styled.TouchableHighlight`
+export const Btn = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.7
+})`
     width:100%;
     height:68px;
-    background-color: white;
+    background-color: ${color.blue_300};
     border-radius: 50px;
     justify-content: center;
     align-items: center;
@@ -64,5 +67,14 @@ export const CaptionText = styled.Text`
     font-weight: 500;
     color: white;
     text-align: center;
+`;
+
+export const ResetButton = styled.TouchableOpacity.attrs({
+    activeOpacity: 0.7
+})`
+    position: absolute;
+    padding: ${spacing.small}px;
+    right: 10px;
+    top: 10px;
 `;
 

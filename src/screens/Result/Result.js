@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "../..";
+import { Container, Text } from "../..";
 import { ScrollView } from "react-native";
 import { spacing } from "../../theme/spacing";
 import { getData } from "../../utils/storage";
-import { Record, RecordItemText } from "./styled";
+import { Header, ListWrapper, Record, RecordItemText, TitleWrapper } from "./styled";
+import { DataExporter } from "./components/DataExporter";
 
 export const Result = () => {
 
@@ -20,20 +21,31 @@ export const Result = () => {
 
     return (
         <Container paddingHorizontal={spacing.default}>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                {
-                    list?.map((item, index) => (
-                        <Record key={index}>
-                            <RecordItemText>{`Name: ${item.name}`}</RecordItemText>
-                            <RecordItemText>{`Number: ${item.number}`}</RecordItemText>
-                            <RecordItemText>{`Classification: ${item.classification}`}</RecordItemText>
-                            <RecordItemText>{`Speciality: ${item.speciality}`}</RecordItemText>
-                            <RecordItemText>{`Area: ${item.area}`}</RecordItemText>
-                            <RecordItemText>{`Hospital: ${item.hospital}`}</RecordItemText>
-                        </Record>
-                    ))
-                }
-            </ScrollView>
+            <Header>
+                <TitleWrapper>
+                    <Text variant={Text.VARIANTS.LG} weight={Text.WEIGHTS[600]} >Attendees</Text>
+                </TitleWrapper>
+                <DataExporter data={list} />
+            </Header>
+            <ListWrapper>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{
+                    gap: spacing.medium
+                }}>
+                    {
+                        list?.map((item, index) => (
+                            <Record key={index}>
+                                <RecordItemText>{`Name: ${item.name}`}</RecordItemText>
+                                <RecordItemText>{`Classification: ${item.classification}`}</RecordItemText>
+                                <RecordItemText>{`Speciality: ${item.speciality}`}</RecordItemText>
+                                <RecordItemText>{`Hospital: ${item.hospital}`}</RecordItemText>
+                                <RecordItemText>{`City: ${item.city}`}</RecordItemText>
+                                <RecordItemText>{`NS Name: ${item.nsName}`}</RecordItemText>
+                                <RecordItemText>{`ANM Name: ${item.anmName}`}</RecordItemText>
+                            </Record>
+                        ))
+                    }
+                </ScrollView>
+            </ListWrapper>
         </Container>
     );
 };

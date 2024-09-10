@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {Button, Text, Image, View } from "react-native";
+import {Button } from "react-native";
 import { Container } from "../..";
 import { spacing } from "../../theme/spacing";
 import { Camera, useCameraDevice, useCameraPermission, useCodeScanner } from "react-native-vision-camera";
@@ -15,13 +15,15 @@ import {
     Btn, 
     BtnText,
     CaptionText,
+    ResetButton,
 } from "./styled";
 import { setData } from "../../utils/storage";
 import debounce from 'lodash/debounce';
 import { BottomSheet } from "../../components/BottomSheet";
 
-import BG from '../../../assets/bg-image.png'
-import Logo from '../../../assets/logo.png'
+import { Text } from "../..";
+import { scale } from "../../utils/media";
+import { checkExpiryDate } from "../../utils/utils";
 
 export const Scanner = () => {
 
@@ -36,14 +38,15 @@ export const Scanner = () => {
 
     const storeData = codes => {
         const code = codes[0].value;
-        const [name, number, classification, speciality, area, hospital] = code.split('|');
+        const [name, classification, speciality, hospital, city, nsName, anmName] = code.split('|');
         const obj = {
             name, 
-            number, 
             classification, 
             speciality, 
-            area, 
-            hospital
+            hospital,
+            city,
+            nsName,
+            anmName,
         };
         setIsVisible(true);
         setCurrent(obj);
@@ -86,35 +89,47 @@ export const Scanner = () => {
 		return <Text>No permission</Text>;
 	}
 
+    const isExpired = checkExpiryDate();
+
     return (
-        <Container paddingHorizontal={spacing.default} paddingTop={20} paddingBottom={20} backgroundImage={BG}>
-            <View>
+        <Container paddingHorizontal={spacing.default} paddingTop={20} paddingBottom={20}>
+            
+            {/* <View>
 
             <CaptionText>For healthcare professionals only</CaptionText>
             </View>
-            <LogoHolder source={Logo}></LogoHolder>
+            <LogoHolder source={IMAGES.LOGO}></LogoHolder> */}
             <CameraWrapper>
-                <Camera
-                    style={{
-                        height: 300,
-                        width: 300,
-                        
-                    }}
-                    device={device}
-                    isActive={isActive}
-                    codeScanner={codeScanner}
-                />
+                {
+                    !isExpired && (
+                        <Camera
+                            style={{
+                                height: scale(250),
+                                width: scale(250),
+                            }}
+                            device={device}
+                            isActive={isActive}
+                            codeScanner={codeScanner}
+                        />
+                    )
+                }
             </CameraWrapper>
             <ButtonsWrapper>
-                {/* <Button onPress={onReset} title="Reset" /> */}
-                <Btn onPress={onSeeDetails} >
-                    <BtnText>View List</BtnText>
-                    </Btn>
+                {
+                    !isExpired && (
+                        <Btn onPress={onSeeDetails} >
+                            <BtnText>View List</BtnText>
+                        </Btn>
+                    )
+                }
             </ButtonsWrapper>
-            <View>
+            <ResetButton onPress={() => setIsActive(true)}> 
+                <Text>Reset</Text>
+            </ResetButton>
+            {/* <View>
 
             <CaptionText>breastmilk is best</CaptionText>
-            </View>
+            </View> */}
             <BottomSheet displayHandle isVisible={isVisible} onClose={onPressOkay}>
                 <BottomSheetContent>
                     <TextWrapper>

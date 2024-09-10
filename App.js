@@ -11,8 +11,12 @@ export const App = () => {
     return (
         <NavigationContainer>
 			<Stack.Navigator>
-				<Stack.Screen name="Scanner" component={Scanner} />
-				<Stack.Screen name="Result" component={Result} />
+				<Stack.Screen name="Scanner" component={Scanner} options={{
+                    headerShown: false,
+                }} />
+				<Stack.Screen name="Result" component={Result} options={{
+                    headerShown: false,
+                }} />
 			</Stack.Navigator>
 		</NavigationContainer>
     );

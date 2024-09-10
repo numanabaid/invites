@@ -3,6 +3,13 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <queries>
+        <package android:name="com.example.store" />
+        <package android:name="com.example.services" />
+
+        <package android:name="com.whatsapp.android" />
+    </queries>
+
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
